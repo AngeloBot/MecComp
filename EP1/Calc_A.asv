@@ -1,0 +1,14 @@
+function [A] = Calc_A()
+%UNTITLED3 Summary of this function goes here
+%   Detailed explanation goes here
+
+A=[(L1^2)*L2*R*(m2*cos(2*th1-2*th2)-2*m1-m2);
+    (L1^2)*L2*R*m2*sin(2*th1-2*th2);
+    2*L1*(L2^2)*R*m2*sin(th1-th2);
+    -2*L2*uIz*Vel;
+    -2*L1*uIz*Vel*cos(th1-th2);
+    -R*
+A5=
+
+end
+

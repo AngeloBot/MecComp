@@ -1,0 +1,15 @@
+%EP1 - MecComp
+%1o SEM 2020
+%Ângelo Bianco Yanagita 6649978
+%Rodrigo Heira Akamine NUSP
+
+%Definição de Parâmetros e Constantes:
+L1=2;%m
+L2=2.5;%m
+L2e=1.8;%m
+
+m1=450;%kg
+m2=650;%kg
+g=9.81;%m/(s^2)
+F1=-0.5*m1*g;%N
+F2=-0.5*m2*g;%N
