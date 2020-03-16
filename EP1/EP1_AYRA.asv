@@ -48,32 +48,23 @@ if which_run=='E'
     %a=E(1);
     %whos a
     plot(t,E{1,1});
-    hold on;
+    %hold on;
+    h = h_min:h_var:h_max;
+    for h
+        fprintf('alou');
+        figure(2);
+        t=t_i:h:t_f;
+        result_vect={EulerMethod(t_i,t_f,h,Y_0), h, t};
+        plot(t,result_vect(1));
+        
+        E=cat(2,E,result_vect);
+    end
     
     xlabel('Tempo(s)');
     ylabel('Ângulo(s)');
-    legend('ddth1', 'ddth2', 'dth1', 'dth2', 'th1', 'th2');
-    title(strcat('Método de Euler h = ', num2str(h_min)));
-
-    hold off;
+    legend('ddth1','ddth2', 'dth1', 'dth2', 'th1', 'th2');
+    title('Método de Euler');
     
-    hArray = h_min:h_var:h_max;
-    i = 2;
-    for h = 1:length(hArray)
-        figure(i);
-        t=t_i:hArray(h):t_f;
-        result_vect={EulerMethod(t_i,t_f,hArray(h),Y_0), hArray(h), t};
-        plot(t,result_vect{1,1});
-        hold on;
-        E=cat(1,E,result_vect);
-        
-        xlabel('Tempo(s)');
-        ylabel('Ângulo(s)');
-        legend('ddth1', 'ddth2', 'dth1', 'dth2', 'th1', 'th2');
-        title(strcat('Método de Euler h =  ', num2str(hArray(h))));
-        
-        i = i + 1;
-        hold off;
-    end
+    %hold off;
 end
 

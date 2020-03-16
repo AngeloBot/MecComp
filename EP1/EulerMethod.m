@@ -25,8 +25,6 @@ th1;
 th2];
 
 for i=(t_i+h):h:t_f
-    
-    fprintf('Alou')
 
     [A,A0,A5]=Calc_A();
     [B,B0,B4]=Calc_B();
@@ -42,7 +40,7 @@ for i=(t_i+h):h:t_f
     th1;
     th2];
 
-    E=cat(2,E,result_vect)
+    E=cat(2,E,result_vect);
     
     dth1=dth1+h*ddth1;
     dth2=dth2+h*ddth2;
