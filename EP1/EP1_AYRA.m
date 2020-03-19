@@ -35,7 +35,7 @@ t_f = 60;
 h = 0.01;
 Y_0 = [0.4, -0.1, 0, 0];
 
-which_run=input('Qual método rodar: Euler(E) RK4(RK4)','s'); 
+which_run=input('Qual método rodar: Euler(E) RK4(rk4)','s'); 
 
 if which_run=='E'
     
@@ -56,6 +56,18 @@ if which_run=='rk4'
 end
 
 figure(1);
+hold on;
+a = title(titulo);
+a.FontSize = 18;
+grid();
+plot(t,y);
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+hlegend = legend('$\theta_1 \\ (rad)$', '$\theta_2 \\ (rad)$', '$\dot{\theta_1} \\ (rad/s)$', '$\dot{\theta_2} \\ (\frac{rad}{s})$', '$\ddot{\theta_1} \\ (rad/s^2)$', '$\ddot{\theta_2} \\ (rad/s^2)$');
+set(hlegend, 'Interpreter', 'latex');
+hlegend.FontSize = 14;
+hold off;
+
+figure(2);
 suptitle(titulo);
 hold on;
 
