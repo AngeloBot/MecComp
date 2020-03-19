@@ -31,9 +31,9 @@ h_var=input('número de incrementos de passo ','s');
 Y_0=input('vetor de CI(SI)[dth1,dth2,th1,th2] ','s');
 %}
 t_i = 0;
-t_f = 30;
+t_f = 10;
 h_max = 1;
-h_min = 0.1/10;
+h_min = 0.1;
 h_var = 0.1;
 Y_0 = [0.4, -0.1, 0, 0];
 
@@ -80,16 +80,14 @@ if which_run=='E'
 end
 
 if which_run == 'RK4'
-    [Y, th] = rk4(t_i,t_f,h_min,Y_0);
+    [Y,ddth] = rk4(t_i,t_f,h_min,Y_0);
     t = t_i:h_min:t_f;
     figure(1);
     hold on;
-    plot(t,th);
+    plot(t,Y(1:2,:));
     title('Runge Kutta 4')
-    legend('th1','th2');
+    legend('th1','th2','dth1','dth2','ddth1','ddth2');
     grid();
     hold off;
-    theta = cat(1, th, t);
+    theta = cat(1, Y(1:2,:), t);
 end
-
-theta = cat(1, th, t);
