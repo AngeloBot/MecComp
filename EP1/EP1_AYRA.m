@@ -23,12 +23,12 @@ dx_d=80/3.6;%km/h
 Vel=dx_d;%km/h
 
 
-t_i=input('Tempo inicial(s) ','s');
-t_f=input('Tempo final(s) ','s');
-h=input('Passo(s) ','s');
-Y_0=input('vetor de CI(SI)[dth1,dth2,th1,th2] ','s');
+t_i=input('Tempo inicial(s): ','s');
+t_f=input('Tempo final(s): ','s');
+h=input('Passo(s): ','s');
+Y_0=input('vetor de CI(SI)[dth1,dth2,th1,th2]: ','s');
 
-which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4):','s'); 
+which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4): ','s'); 
 
 if which_run=='E'
     
