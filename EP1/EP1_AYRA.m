@@ -22,20 +22,13 @@ R=0.3;%m
 dx_d=80/3.6;%km/h
 Vel=dx_d;%km/h
 
-%{
+
 t_i=input('Tempo inicial(s) ','s');
 t_f=input('Tempo final(s) ','s');
-h_max=input('Passo máximo(s) ','s');
-h_min=input('Passo mínimo(s) ','s');
-h_var=input('número de incrementos de passo ','s');
+h=input('Passo(s) ','s');
 Y_0=input('vetor de CI(SI)[dth1,dth2,th1,th2] ','s');
-%}
-t_i = 0;
-t_f = 60;
-h = 0.01;
-Y_0 = [0.4, -0.1, 0, 0];
 
-which_run=input('Qual método rodar: Euler(E) RK4(rk4)','s'); 
+which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4):','s'); 
 
 if which_run=='E'
     
@@ -45,6 +38,14 @@ if which_run=='E'
     E={EulerMethod(t_i,t_f,h,Y_0), h, t};
     y = E{1,1};
     titulo = strcat('Metodo de Euler com passo h=', num2str(h));
+end
+
+if which_run=='rk2'
+    [Y,ddth] = rk2(t_i,t_f,h,Y_0);
+    t = t_i:h:t_f;
+    y = cat(1, Y, ddth);
+    titulo = strcat('Runge-Kutta 2ºOrdem com passo h=', num2str(h));
+    theta = cat(1, Y(1:2,:), t);
 end
 
 if which_run=='rk4'
@@ -62,7 +63,7 @@ a.FontSize = 18;
 grid();
 plot(t,y);
 xlabel('$Tempo (s)$', 'Interpreter', 'latex');
-hlegend = legend('$\theta_1 \\ (rad)$', '$\theta_2 \\ (rad)$', '$\dot{\theta_1} \\ (rad/s)$', '$\dot{\theta_2} \\ (\frac{rad}{s})$', '$\ddot{\theta_1} \\ (rad/s^2)$', '$\ddot{\theta_2} \\ (rad/s^2)$');
+hlegend = legend('$\theta_1 \\ (rad)$', '$\theta_2 \\ (rad)$', '$\dot{\theta_1} \\ (rad/s)$', '$\dot{\theta_2} \\ (rad/s)$', '$\ddot{\theta_1} \\ (rad/s^2)$', '$\ddot{\theta_2} \\ (rad/s^2)$');
 set(hlegend, 'Interpreter', 'latex');
 hlegend.FontSize = 14;
 hold off;

@@ -29,10 +29,12 @@ for t = (t_i+h):h:t_f
     X = [ddth1 (dth1^2) (dth2^2) dth1 dth2];
     ddth2=(B*X'+B4)/B0;
     
+    %%%%% K1
+    
     K1 = [dth1; dth2; ddth1; ddth2];
     
     %%%%% K2
-    t = t + h/2;
+
     dth1 = dth1 + h*K1(3)/2;
     dth2 = dth2 + h*K1(4)/2;
     th1 = th1 + h*K1(1)/2;
@@ -45,7 +47,6 @@ for t = (t_i+h):h:t_f
     
     K2 = [dth1; dth2; ddth1; ddth2];
 
-    t = t - h/2;
     th1 = th1 - h*K1(1)/2;
     th2 = th2 - h*K1(2)/2;
     dth1 = dth1 - h*K1(3)/2;
@@ -58,7 +59,6 @@ for t = (t_i+h):h:t_f
     
     %%%% K3
 
-    t = t + h/2;
     dth1 = dth1 + h*K2(3)/2;
     dth2 = dth2 + h*K2(4)/2;
     th1 = th1 + h*K2(1)/2;
@@ -71,7 +71,6 @@ for t = (t_i+h):h:t_f
     
     K3 = [dth1; dth2; ddth1; ddth2];
 
-    t = t - h/2;
     th1 = th1 - h*K2(1)/2;
     th2 = th2 - h*K2(2)/2;
     dth1 = dth1 - h*K2(3)/2;
@@ -84,7 +83,6 @@ for t = (t_i+h):h:t_f
     
     %%%% K4
 
-    t = t + h;
     dth1 = dth1 + h*K3(3);
     dth2 = dth2 + h*K3(4);
     th1 = th1 + h*K3(1);
@@ -97,7 +95,6 @@ for t = (t_i+h):h:t_f
     
     K4 = [dth1; dth2; ddth1; ddth2];
 
-    t = t - h;
     th1 = th1 - h*K3(1);
     th2 = th2 - h*K3(2);
     dth1 = dth1 - h*K3(3);
