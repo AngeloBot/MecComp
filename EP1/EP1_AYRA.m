@@ -19,7 +19,7 @@ F1=-0.5*m1*g;%N
 F2=-0.5*m2*g;%N
 uIz=2.7;%kg.(m^2)
 R=0.3;%m
-dx_d=80;%km/h
+dx_d=80/3.6;%km/h
 Vel=dx_d;%km/h
 
 %{
@@ -31,13 +31,13 @@ h_var=input('número de incrementos de passo ','s');
 Y_0=input('vetor de CI(SI)[dth1,dth2,th1,th2] ','s');
 %}
 t_i = 0;
-t_f = 60;
+t_f = 30;
 h_max = 1;
-h_min = 0.5;
+h_min = 0.1/10;
 h_var = 0.1;
 Y_0 = [0.4, -0.1, 0, 0];
 
-which_run=input('Qual método rodar: Euler(E) ','s'); 
+which_run=input('Qual método rodar: Euler(E) RK4(RK4)','s'); 
 
 if which_run=='E'
     
@@ -47,18 +47,19 @@ if which_run=='E'
     E={EulerMethod(t_i,t_f,h_min,Y_0), h_min, t};
     %a=E(1);
     %whos a
-    plot(t,E{1,1});
+    plot(t,E{1,1}(5:6,:));
     hold on;
     
     xlabel('Tempo(s)');
     ylabel('Ângulo(s)');
     legend('ddth1', 'ddth2', 'dth1', 'dth2', 'th1', 'th2');
     title(strcat('Método de Euler h = ', num2str(h_min)));
-
+    grid();
     hold off;
     
     hArray = h_min:h_var:h_max;
     i = 2;
+    
     for h = 1:length(hArray)
         figure(i);
         t=t_i:hArray(h):t_f;
@@ -75,5 +76,20 @@ if which_run=='E'
         i = i + 1;
         hold off;
     end
+    
 end
 
+if which_run == 'RK4'
+    [Y, th] = rk4(t_i,t_f,h_min,Y_0);
+    t = t_i:h_min:t_f;
+    figure(1);
+    hold on;
+    plot(t,th);
+    title('Runge Kutta 4')
+    legend('th1','th2');
+    grid();
+    hold off;
+    theta = cat(1, th, t);
+end
+
+theta = cat(1, th, t);
