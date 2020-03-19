@@ -15,9 +15,9 @@ Y = [th1;th2;dth1;dth2];
 [B,B0,B4]=Calc_B();
 
 X = [ddth1 (dth1^2) (dth2^2) dth1 dth2];
-ddth1=(A*X'+A5)/A0;
+ddth1=(A*X'+A5)/A0
 X = [ddth1 (dth1^2) (dth2^2) dth1 dth2];
-ddth2=(B*X'+B4)/B0;
+ddth2=(B*X'+B4)/B0
 
 ddth = [ddth1; ddth2];
 
