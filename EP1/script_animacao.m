@@ -13,7 +13,7 @@
 
 l=0.75;
 
-for ti=1:5:numel(t)
+for ti=1:30:numel(t)
     
     figure(2);
     clf(2);

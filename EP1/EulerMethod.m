@@ -17,12 +17,12 @@ ddth1=(A*Y'+A5)/A0;
 Y=[ddth1 (dth1^2) (dth2^2) dth1 dth2];
 ddth2=(B*Y'+B4)/B0;
 
-E=[ddth1;
-ddth2;
-dth1;
-dth2;
-th1;
-th2];
+E=[th1;
+   th2;
+   dth1;
+   dth2;
+   ddth1;
+   ddth2];
 
 for i=(t_i+h):h:t_f
 
@@ -33,12 +33,12 @@ for i=(t_i+h):h:t_f
     Y=[ddth1 (dth1^2) (dth2^2) dth1 dth2];
     ddth2=(B*Y'+B4)/B0;
     
-    result_vect=[ddth1;
-    ddth2;
-    dth1;
-    dth2;
-    th1;
-    th2];
+    result_vect=[th1;
+                 th2;
+                 dth1;
+                 dth2;
+                 ddth1;
+                 ddth2];
 
     E=cat(2,E,result_vect);
     

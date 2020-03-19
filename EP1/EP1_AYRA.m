@@ -31,10 +31,8 @@ h_var=input('número de incrementos de passo ','s');
 Y_0=input('vetor de CI(SI)[dth1,dth2,th1,th2] ','s');
 %}
 t_i = 0;
-t_f = 10;
-h_max = 1;
-h_min = 0.1;
-h_var = 0.1;
+t_f = 60;
+h = 0.01;
 Y_0 = [0.4, -0.1, 0, 0];
 
 which_run=input('Qual método rodar: Euler(E) RK4(RK4)','s'); 
@@ -43,51 +41,64 @@ if which_run=='E'
     
     figure(1);
     
-    t=t_i:h_min:t_f;
-    E={EulerMethod(t_i,t_f,h_min,Y_0), h_min, t};
-    %a=E(1);
-    %whos a
-    plot(t,E{1,1}(5:6,:));
-    hold on;
-    
-    xlabel('Tempo(s)');
-    ylabel('Ângulo(s)');
-    legend('ddth1', 'ddth2', 'dth1', 'dth2', 'th1', 'th2');
-    title(strcat('Método de Euler h = ', num2str(h_min)));
-    grid();
-    hold off;
-    
-    hArray = h_min:h_var:h_max;
-    i = 2;
-    
-    for h = 1:length(hArray)
-        figure(i);
-        t=t_i:hArray(h):t_f;
-        result_vect={EulerMethod(t_i,t_f,hArray(h),Y_0), hArray(h), t};
-        plot(t,result_vect{1,1});
-        hold on;
-        E=cat(1,E,result_vect);
-        
-        xlabel('Tempo(s)');
-        ylabel('Ângulo(s)');
-        legend('ddth1', 'ddth2', 'dth1', 'dth2', 'th1', 'th2');
-        title(strcat('Método de Euler h =  ', num2str(hArray(h))));
-        
-        i = i + 1;
-        hold off;
-    end
-    
+    t=t_i:h:t_f;
+    E={EulerMethod(t_i,t_f,h,Y_0), h, t};
+    y = E{1,1};
+    titulo = strcat('Metodo de Euler com passo h=', num2str(h));
 end
 
-if which_run == 'RK4'
-    [Y,ddth] = rk4(t_i,t_f,h_min,Y_0);
-    t = t_i:h_min:t_f;
-    figure(1);
-    hold on;
-    plot(t,Y(1:2,:));
-    title('Runge Kutta 4')
-    legend('th1','th2','dth1','dth2','ddth1','ddth2');
-    grid();
-    hold off;
+if which_run=='rk4'
+    [Y,ddth] = rk4(t_i,t_f,h,Y_0);
+    t = t_i:h:t_f;
+    y = cat(1, Y, ddth);
+    titulo = strcat('Runge-Kutta 4ºOrdem com passo h=', num2str(h));
     theta = cat(1, Y(1:2,:), t);
 end
+
+figure(1);
+suptitle(titulo);
+hold on;
+
+subplot(3,2,1);
+plot(t,y(1,:));
+title('$\theta_1$', 'Interpreter', 'latex');
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+ylabel('$\theta_1 \\ (rad)$', 'Interpreter', 'latex');
+grid();
+
+subplot(3,2,2);
+plot(t,y(2,:));
+title('$\theta_2$', 'Interpreter', 'latex');
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+ylabel('$\theta_2 \\ (rad)$', 'Interpreter', 'latex');
+grid();
+
+subplot(3,2,3);
+plot(t,y(3,:));
+title('$\dot{\theta_1}$', 'Interpreter', 'latex');
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+ylabel('$\dot{\theta_1} \\ (rad/s)$', 'Interpreter', 'latex');
+grid();
+
+subplot(3,2,4);
+plot(t,y(4,:));
+title('$\dot{\theta_2}$', 'Interpreter', 'latex');
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+ylabel('$\dot{\theta_2} \\ (rad/s)$', 'Interpreter', 'latex');
+grid();
+
+subplot(3,2,5);
+plot(t,y(5,:));
+title('$\ddot{\theta_1}$', 'Interpreter', 'latex');
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+ylabel('$\ddot{\theta_1} \\ (rad/s^2)$', 'Interpreter', 'latex');
+grid();
+
+subplot(3,2,6);
+plot(t,y(6,:));
+title('$\ddot{\theta_2}$', 'Interpreter', 'latex');
+xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+ylabel('$\ddot{\theta_2} \\ (rad/s^2)$', 'Interpreter', 'latex');
+grid();
+
+hold off;
