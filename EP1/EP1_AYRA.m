@@ -38,10 +38,8 @@ which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4): ','s');
 if which_run=='E'
     
     figure(1);
-    
     t=t_i:h:t_f;
-    E={EulerMethod(t_i,t_f,h,Y_0), h, t};
-    y = E{1,1};
+    y= EulerMethod(t_i,t_f,h,Y_0);
     titulo = strcat('Metodo de Euler com passo h=', num2str(h));
 end
 
