@@ -2,10 +2,10 @@ function [E] = EulerMethod(t_i,t_f,h,Y_0)
 %EulerMethod - Aplica o método de Euler
 %   Y_0=[dth1_0 dth2_0 th1_0 th2_0]
 global th1 th2 dth1 dth2 ddth1 ddth2;
-dth1=Y_0(1);
-dth2=Y_0(2);
-th1=Y_0(3);
-th2=Y_0(4);
+dth1=Y_0(3);
+dth2=Y_0(4);
+th1=Y_0(1);
+th2=Y_0(2);
 
 
 Y=[0 (dth1^2) (dth2^2) dth1 dth2];
