@@ -29,19 +29,14 @@ t_f=input('Tempo final(s): ','s');
 t_f = str2double(t_f);
 h=input('Passo(s): ','s');
 h = str2double(h);
-%Y_0=input('vetor de CI(SI)[th1, th2, dth1, dth2]: ','s');
-
-Y_0 = [0;0;0.4;-0.1];
+Y_0=input('vetor de CI(SI)[th1, th2, dth1, dth2]: ','s');
+Y_0 = str2double(Y_0);
 
 which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4): ','s'); 
 
 if strcmp(which_run, 'E')
-    
-    figure(1);
-    
-    t=t_i:h:t_f;
-    E={EulerMethod(t_i,t_f,h,Y_0), h, t};
-    y = E{1,1};
+    [Y,dydt,t] = euler(@foo,t_i,t_f,h,Y_0);
+    y = cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
     titulo = strcat('Metodo de Euler com passo h=', num2str(h));
 
 elseif strcmp(which_run, 'rk2')
@@ -49,10 +44,10 @@ elseif strcmp(which_run, 'rk2')
     y = cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
     titulo = strcat('Runge-Kutta 2ºOrdem com passo h=', num2str(h));
 
-elseif strcmp(which_run, 'rk4-geral')
-    [y, dydt] = rk4_geral(@foo, t_i, t_f, h, Y_0);
+elseif strcmp(which_run, 'rk4')
+    [y, dydt] = rk4(@foo, t_i, t_f, h, Y_0);
     t = t_i:h:t_f;
-    titulo = strcat('Runge-Kutta 4ºOrdem Geral com passo h=', num2str(h));
+    titulo = strcat('Runge-Kutta 4ºOrdem com passo h=', num2str(h));
     y = cat(1, y, dydt(length(dydt(:,1))-1:length(dydt(:,1)), :));
 end
 
