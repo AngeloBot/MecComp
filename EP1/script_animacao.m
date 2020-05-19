@@ -1,15 +1,15 @@
 % Este script gera uma anima??o do movimento dos ve?culos
 % Sendo: 
-%(xi,yi): A posi??o da massa i=(1,2)
+%(xi,yi): A posicao da massa i=(1,2)
 % Li: Comprimento do carro i=(1,2)
-% L2eixo: posi??o do eixo do segundo carro
-% ? preciso que esteja declarado:
+% L2eixo: posicaoo do eixo do segundo carro
+% precisa-se de:
 % Um vetor de tempo t e os g.d.l theta(1 e 2,t), ouseja, Uma das linhas tem theta1 e
 % ourta o theta2 com tempo nas colunas.
 
-% Este script gera uma anima??o cujo exemplo consta no moodle. Essa
-% anima??o n?o precisa constar no trabalho impresso e apenas serve para
-% ajudar a interpreta??o dos resultados caso haja interesse.
+% Este script gera uma animacao cujo exemplo consta no moodle. Essa
+% animacao nao precisa constar no trabalho impresso e apenas serve para
+% ajudar a interpretacao dos resultados caso haja interesse.
 
 l=0.75;
 
