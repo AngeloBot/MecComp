@@ -1,6 +1,6 @@
 %EP1 - MecComp
 %1o SEM 2020
-%Ângelo Bianco Yanagita 6649978
+%Ã‚ngelo Bianco Yanagita 6649978
 %Rodrigo Heira Akamine 10262565
 
 clear all;
@@ -8,7 +8,7 @@ close all;
 clc;
 global L1 L2 L2e m1 m2 g F1 F2 uIz R dx_d Vel;
 
-%Definição de Parâmetros e Constantes:
+%DefiniÃ§Ã£o de ParÃ¢metros e Constantes:
 L1=2;%m
 L2=2.5;%m
 L2e=1.8;%m
@@ -22,7 +22,7 @@ R=0.3;%m
 dx_d=80/3.6;%km/h
 Vel=dx_d;%km/h
 
-display_method=input('Escolher entre mostrar resultado de um exercício específico(E) ou definir outros parâmetros arbitrários(A) ','s');
+display_method=input('Escolher entre mostrar resultado de um exercÃ­cio especÃ­fico(E) ou definir outros parÃ¢metros arbitrÃ¡rios(A) ','s');
 
 if strcmp(display_method, 'A')
     t_i=input('Tempo inicial(s): ','s');
@@ -34,8 +34,8 @@ if strcmp(display_method, 'A')
     Y_0=input('vetor de CI(SI)[th1, th2, dth1, dth2]: ','s');
     Y_0 = str2double(Y_0);
 
-    %deve-se selecionar qual método rodar
-    which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4): ','s'); 
+    %deve-se selecionar qual mÃ©todo rodar
+    which_run=input('Qual mÃ©todo rodar: Euler(E) / RK2(rk2) / RK4(rk4): ','s'); 
 
     if strcmp(which_run, 'E')
         [Y,dydt,t] = euler(@foo,t_i,t_f,h,Y_0);
@@ -45,12 +45,12 @@ if strcmp(display_method, 'A')
     elseif strcmp(which_run, 'rk2')
         [Y,dydt,t] = rk2(@foo,t_i,t_f,h,Y_0);
         y = cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
-        titulo = strcat('Runge-Kutta 2ºOrdem com passo h=', num2str(h));
+        titulo = strcat('Runge-Kutta 2ÂºOrdem com passo h=', num2str(h));
 
     elseif strcmp(which_run, 'rk4')
         [y, dydt] = rk4(@foo, t_i, t_f, h, Y_0);
         t = t_i:h:t_f;
-        titulo = strcat('Runge-Kutta 4ºOrdem com passo h=', num2str(h));
+        titulo = strcat('Runge-Kutta 4ÂºOrdem com passo h=', num2str(h));
         y = cat(1, y, dydt(length(dydt(:,1))-1:length(dydt(:,1)), :));
     end
 
@@ -63,7 +63,7 @@ elseif strcmp(display_method,'E')
     all_y={};
     all_dydt={};
     all_t={};
-    especific_ex=input('Qual exercício rodar? (por exemplo, se ex1 alternativa a, escrever "1a" ','s');
+    especific_ex=input('Qual exercÃ­cio rodar? (por exemplo, se ex1 alternativa a, escrever "1a" ','s');
     
     for i=1:length(all_h)
         
@@ -73,19 +73,19 @@ elseif strcmp(display_method,'E')
 
             [Y,dydt,t] = euler(@foo,t_i,t_f,h,Y_0);
             all_y(i) = cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
-            titulo ='Exercício 1a';
+            titulo ='ExercÃ­cio 1a';
 
         elseif strcmp(especific_ex,'1b')
 
             [Y,dydt,t] = rk2(@foo,t_i,t_f,h,Y_0);
             all_y(i)= cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
-            titulo ='Exercício 1b';
+            titulo ='ExercÃ­cio 1b';
 
         elseif strcmp(especific_ex,'1c')
 
             [y, dydt] = rk4(@foo, t_i, t_f, h, Y_0);
             t = t_i:h:t_f;
-            titulo ='Exercício 1c';
+            titulo ='ExercÃ­cio 1c';
             all_y(i) = cat(1, y, dydt(length(dydt(:,1))-1:length(dydt(:,1)), :));
 
         end
@@ -106,7 +106,6 @@ if strcmp(display_method,'E')
     hlegend.FontSize = 14;
     hold off;
 end
-
 
 figure(2);
 suptitle(titulo);
