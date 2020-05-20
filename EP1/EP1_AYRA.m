@@ -32,8 +32,9 @@ if strcmp(display_method, 'A')
     h=input('Passo(s): ','s');
     h = str2double(h);
     Y_0=input('vetor de CI(SI)[th1, th2, dth1, dth2]: ','s');
-    Y_0 = str2double(Y_0);
-
+    Y_0 = str2num(Y_0);
+    Y_0=transpose(Y_0);
+    amostras_h=1;
     %deve-se selecionar qual método rodar
     which_run=input('Qual método rodar: Euler(E) / RK2(rk2) / RK4(rk4): ','s'); 
 
@@ -56,13 +57,12 @@ if strcmp(display_method, 'A')
 
 elseif strcmp(display_method,'E')
     
+    amostras_h=5;
     t_i=0;
     t_f=60;
-    Y_0=[0, 0, 0.4, -0.1];
-    all_h=linspace(0.01,1,5);
+    Y_0=[0; 0; -0.4; -0.1];
+    all_h=linspace(0.01,1,amostras_h);
     all_y={};
-    all_dydt={};
-    all_t={};
     especific_ex=input('Qual exercício rodar? (por exemplo, se ex1 alternativa a, escrever "1a" ','s');
     
     for i=1:length(all_h)
@@ -71,14 +71,14 @@ elseif strcmp(display_method,'E')
         
         if strcmp(especific_ex,'1a')
 
-            [Y,dydt,t] = euler(@foo,t_i,t_f,h,Y_0);
-            all_y(i) = cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
+            [Y,dydt,t] = euler(@foo,t_i,t_f,h,Y_0)
+            all_y{i} = cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
             titulo ='Exercício 1a';
 
         elseif strcmp(especific_ex,'1b')
 
             [Y,dydt,t] = rk2(@foo,t_i,t_f,h,Y_0);
-            all_y(i)= cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
+            all_y{i}= cat(1, Y, dydt(length(dydt(:,1))-1:length(dydt(:,1)),:));
             titulo ='Exercício 1b';
 
         elseif strcmp(especific_ex,'1c')
@@ -86,15 +86,23 @@ elseif strcmp(display_method,'E')
             [y, dydt] = rk4(@foo, t_i, t_f, h, Y_0);
             t = t_i:h:t_f;
             titulo ='Exercício 1c';
-            all_y(i) = cat(1, y, dydt(length(dydt(:,1))-1:length(dydt(:,1)), :));
+            all_y{i} = cat(1, y, dydt(length(dydt(:,1))-1:length(dydt(:,1)), :));
 
         end
     end
+    
+    for i=1:amostras_h
+        display(all_y{i})
+
+    end
 end
+
+
     
-if strcmp(display_method,'E')
+
+if strcmp(display_method,'A')
     
-    figure(1);
+    figure(2);
     hold on;
     a = title(titulo);
     a.FontSize = 18;
@@ -107,59 +115,131 @@ if strcmp(display_method,'E')
     hold off;
 end
 
-figure(2);
-suptitle(titulo);
-hold on;
+if strcmp(display_method,'E')
+    
+    for i=1:amostras_h
+        
+        figure(i);
+        hold on;
+        a = title(strcat('h=', num2str(all_h(i))));
+        a.FontSize = 18;
+        grid();
+        plot(t_i:all_h(i):t_f,all_y{i}(:,:));
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        hlegend = legend({'$\theta_1 \\ (rad)$', '$\theta_2 \\ (rad)$', '$\dot{\theta_1} \\ (rad/s)$', '$\dot{\theta_2} \\ (rad/s)$', '$\ddot{\theta_1} \\ (rad/s^2)$', '$\ddot{\theta_2} \\ (rad/s^2)$'}, 'Interpreter', 'latex');
 
-for i=1:lenght(all_h)
+        hlegend.FontSize = 14;
+        hold off;
+    end
+    
+    for i=1:amostras_h
+    
+    figure(i);
+    hold off;
+    end
+end
+
+
+
+figure(1);
+suptitle(titulo);
+
+if strcmp(display_method,'E')
+
+    for i=1:amostras_h
+
+        display(i)
+        hold on;
+
+        subplot(3,2,1);
+        plot(t_i:all_h(i):t_f,all_y{i}(1,:));
+        title('$\theta_1$', 'Interpreter', 'latex');
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        ylabel('$\theta_1 \\ (rad)$', 'Interpreter', 'latex');
+        grid();
+
+        subplot(3,2,2);
+        plot(t_i:all_h(i):t_f,all_y{i}(2,:));
+        title('$\theta_2$', 'Interpreter', 'latex');
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        ylabel('$\theta_2 \\ (rad)$', 'Interpreter', 'latex');
+        grid();
+
+        subplot(3,2,3);
+        plot(t_i:all_h(i):t_f,all_y{i}(3,:));
+        title('$\dot{\theta_1}$', 'Interpreter', 'latex');
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        ylabel('$\dot{\theta_1} \\ (rad/s)$', 'Interpreter', 'latex');
+        grid();
+
+        subplot(3,2,4);
+        plot(t_i:all_h(i):t_f,all_y{i}(4,:));
+        title('$\dot{\theta_2}$', 'Interpreter', 'latex');
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        ylabel('$\dot{\theta_2} \\ (rad/s)$', 'Interpreter', 'latex');
+        grid();
+
+        subplot(3,2,5);
+        plot(t_i:all_h(i):t_f,all_y{i}(5,:));
+        title('$\ddot{\theta_1}$', 'Interpreter', 'latex');
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        ylabel('$\ddot{\theta_1} \\ (rad/s^2)$', 'Interpreter', 'latex');
+        grid();
+
+        subplot(3,2,6);
+        plot(t_i:all_h(i):t_f,all_y{i}(6,:));
+        title('$\ddot{\theta_2}$', 'Interpreter', 'latex');
+        xlabel('$Tempo (s)$', 'Interpreter', 'latex');
+        ylabel('$\ddot{\theta_2} \\ (rad/s^2)$', 'Interpreter', 'latex');
+
+        legend_cell = cellstr(num2str(all_h));
+        legend(legend_cell,'Location','northwest','Orientation','horizontal')
+        grid();
+    end
+elseif strcmp(display_method,'A')
+    hold on;
 
     subplot(3,2,1);
-    plot(t,all_y(i,1,:));
+    plot(t,y(1,:));
     title('$\theta_1$', 'Interpreter', 'latex');
     xlabel('$Tempo (s)$', 'Interpreter', 'latex');
     ylabel('$\theta_1 \\ (rad)$', 'Interpreter', 'latex');
-    legend(num2str(all_h));
     grid();
 
     subplot(3,2,2);
-    plot(t,all_y(i,2,:));
+    plot(t,y(2,:));
     title('$\theta_2$', 'Interpreter', 'latex');
     xlabel('$Tempo (s)$', 'Interpreter', 'latex');
     ylabel('$\theta_2 \\ (rad)$', 'Interpreter', 'latex');
-    legend(num2str(all_h));
     grid();
 
     subplot(3,2,3);
-    plot(t,all_y(i,3,:));
+    plot(t,y(3,:));
     title('$\dot{\theta_1}$', 'Interpreter', 'latex');
     xlabel('$Tempo (s)$', 'Interpreter', 'latex');
     ylabel('$\dot{\theta_1} \\ (rad/s)$', 'Interpreter', 'latex');
-    legend(num2str(all_h));
     grid();
 
     subplot(3,2,4);
-    plot(t,all_y(i,4,:));
+    plot(t,y(4,:));
     title('$\dot{\theta_2}$', 'Interpreter', 'latex');
     xlabel('$Tempo (s)$', 'Interpreter', 'latex');
     ylabel('$\dot{\theta_2} \\ (rad/s)$', 'Interpreter', 'latex');
-    legend(num2str(all_h));
     grid();
 
     subplot(3,2,5);
-    plot(t,all_y(i,5,:));
+    plot(t,y(5,:));
     title('$\ddot{\theta_1}$', 'Interpreter', 'latex');
     xlabel('$Tempo (s)$', 'Interpreter', 'latex');
     ylabel('$\ddot{\theta_1} \\ (rad/s^2)$', 'Interpreter', 'latex');
-    legend(num2str(all_h));
     grid();
 
     subplot(3,2,6);
-    plot(t,all_y(i,6,:));
+    plot(t,y(6,:));
     title('$\ddot{\theta_2}$', 'Interpreter', 'latex');
     xlabel('$Tempo (s)$', 'Interpreter', 'latex');
     ylabel('$\ddot{\theta_2} \\ (rad/s^2)$', 'Interpreter', 'latex');
-    legend(num2str(all_h));
-    grid();
-end
 
+    grid();
+end    
 hold off;
